@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class TopDownPlayerController : MonoBehaviour
 {
+    // These are the values that will be tweaked depending on the floor surface
+    [Header("Temp Settings")]   
+    public float accelerationFactor = 25.0f;
+    public float maxSpeed = 150;
+    public float turnFactor = 3.5f;     // Larger number = quicker turning
+    public float driftFactor = 0.8f;    // Larger number = more drifting
+    public float dragFactor = 5.0f;     // Larger number = stickier floor
 
-    [Header("Temp Settings")]
-    public float accelerationFactor = 10.0f;
-    public float turnFactor = 3.5f;     // Bigger the number the quicker the turn
-    public float driftFactor = 0.5f;
-    public float dragFactor = 5.0f;     // Bigger the number = the less slippery the floor
-    public float maxSpeed = 20;
-    public AnimationCurve turnFactorCurve = AnimationCurve.Linear(0, 0, 1, 1);     // How much turnFactor scales with velocity. Adjust graph as needed Larger num = more significant scaling = turning less sensitive at higher speeds. 
+    // Adjust turnFactorCurve in the Inspector graph;
+    // turnFactorCurve is meant to scale the turnFactor down as the velocity goes up, making turning at high speeds harder;
+    public AnimationCurve turnFactorCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     // Local variables
     private float accelerationInput = 0;
@@ -63,6 +66,7 @@ public class TopDownPlayerController : MonoBehaviour
 
     void ApplySteering()
     {
+        // turnFactor is scaled according to the current velocity
         float scaledTurnFactor = turnFactor + (turnFactor * turnFactorCurve.Evaluate(playerRigidbody2D.velocity.magnitude / maxSpeed));
 
         // Update the rotation angle based on input
@@ -72,6 +76,7 @@ public class TopDownPlayerController : MonoBehaviour
         playerRigidbody2D.MoveRotation(rotationAngle);
     }
 
+    // Orthogonal Velocity creates the drifting effect, the 'sideways' velocity
     void KillOrthogonalVelocity()
     {
         Vector2 forwardVelocity = transform.up * Vector2.Dot(playerRigidbody2D.velocity, transform.up);
