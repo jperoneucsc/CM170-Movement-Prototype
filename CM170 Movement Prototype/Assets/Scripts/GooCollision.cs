@@ -5,7 +5,8 @@ using UnityEngine;
 public class GooCollision : MonoBehaviour
 {
     ParticleSystem ps;
-    public float friction = 0.95f;
+    public List<Color32> colors;
+    public List<float> frictions;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,14 +28,31 @@ public class GooCollision : MonoBehaviour
         for (int i = 0; i < particles.Count; i++)
         {
             var p = particles[i];
-            p.remainingLifetime = 0;
+
+            int currIndex = (int)p.rotation;
+
+            if (currIndex < colors.Count)
+            {
+                p.rotation = currIndex + 1;
+                p.startColor = colors[currIndex];
+            } else {
+                p.remainingLifetime = 0;
+            }
+
+            float currentFriction = 1;
+            if (currIndex < frictions.Count)
+            {
+                currentFriction = frictions[currIndex];
+            }
+
+            
             particles[i] = p;
             for (int j = 0; j < data.GetColliderCount(i); j++)
             {
                 var collider = data.GetCollider(i, j);
                 if (collider.TryGetComponent(out Rigidbody2D rb))
                 {
-                    rb.velocity *= friction;
+                    rb.velocity *= currentFriction;
                 }
             }
         }
