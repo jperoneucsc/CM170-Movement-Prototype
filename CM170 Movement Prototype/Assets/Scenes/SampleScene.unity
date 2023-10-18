@@ -312,7 +312,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   accelerationFactor: 25
   maxSpeed: 200
-  turnFactor: 3.5
+  turnFactor: 2
   driftFactor: 0.8
   dragFactor: 5
   turnFactorCurve:
