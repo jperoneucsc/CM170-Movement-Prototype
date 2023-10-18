@@ -8,7 +8,7 @@ public class FinishHandler : MonoBehaviour
 {
     DateTime lapStart = DateTime.Now;
 
-    TimeSpan fastestLap = TimeSpan.MaxValue;
+    TimeSpan fastestLap = TimeSpan.FromMinutes(1);
 
     TimeSpan currentLap = TimeSpan.Zero;
 
@@ -26,7 +26,7 @@ public class FinishHandler : MonoBehaviour
     void Update()
     {
         currentLap = DateTime.Now.Subtract(lapStart);
-        textMeshPro.SetText(currentLap.Seconds + " | " + fastestLap.Seconds);
+        textMeshPro.SetText(currentLap.TotalSeconds + " | " + fastestLap.TotalSeconds);
     }
 
     void OnTriggerExit2D() {
@@ -34,5 +34,6 @@ public class FinishHandler : MonoBehaviour
             fastestLap = currentLap;
         }
         lapStart = DateTime.Now;
+        currentLap = TimeSpan.Zero;
     }
 }
