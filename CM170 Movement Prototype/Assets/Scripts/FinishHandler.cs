@@ -26,14 +26,15 @@ public class FinishHandler : MonoBehaviour
     void Update()
     {
         currentLap = DateTime.Now.Subtract(lapStart);
-        textMeshPro.SetText(currentLap.TotalSeconds + " | " + fastestLap.TotalSeconds);
+        textMeshPro.SetText("Lap time " + currentLap.TotalSeconds/* + " | " + fastestLap.TotalSeconds*/);
     }
 
-    void OnTriggerExit2D() {
+    void OnTriggerEnter2D() {
         if (currentLap < fastestLap) {
             fastestLap = currentLap;
         }
         lapStart = DateTime.Now;
         currentLap = TimeSpan.Zero;
+        Debug.Log("fastest lap " + fastestLap.TotalSeconds);
     }
 }
