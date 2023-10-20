@@ -15,6 +15,8 @@ public class FinishHandler : MonoBehaviour
     GameObject timer = null;
 
     TextMeshProUGUI textMeshPro = null;
+
+    CheckpointHandler checkpointHandler;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,11 +32,21 @@ public class FinishHandler : MonoBehaviour
     }
 
     void OnTriggerEnter2D() {
-        if (currentLap < fastestLap) {
-            fastestLap = currentLap;
+        if(checkpointHandler.ValidFinish()) {
+            checkpointHandler.lastCheckpointIndex = 0;
+            if (currentLap < fastestLap) {
+                fastestLap = currentLap;
+            }
+            lapStart = DateTime.Now;
+            currentLap = TimeSpan.Zero;
+            Debug.Log("fastest lap " + fastestLap.TotalSeconds);
         }
-        lapStart = DateTime.Now;
-        currentLap = TimeSpan.Zero;
-        Debug.Log("fastest lap " + fastestLap.TotalSeconds);
+        else {
+            Debug.Log("checkpoint missed");
+        }
+    }
+
+    public void SetCheckpointHandler(CheckpointHandler checkpointHandler) {
+        this.checkpointHandler = checkpointHandler;
     }
 }
