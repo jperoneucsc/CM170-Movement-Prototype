@@ -444,7 +444,7 @@ GameObject:
   - component: {fileID: 159890958}
   - component: {fileID: 159890959}
   m_Layer: 0
-  m_Name: Circle
+  m_Name: Car
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -474,10 +474,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3361c32e3540bbd469972ea972068835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accelerationFactor: 25
-  maxSpeed: 200
-  turnFactor: 2
-  driftFactor: 0.8
+  accelerationFactor: 10
+  maxSpeed: 180
+  turnFactor: 1
+  driftFactor: 0.2
   dragFactor: 5
   turnFactorCurve:
     serializedVersion: 2
@@ -585,7 +585,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0.5
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
